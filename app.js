@@ -1,4 +1,4 @@
-const PUBLIC_BACKEND_URL = 'https://615110f40b497aad-203-190-14-228.serveousercontent.com';
+const PUBLIC_BACKEND_URL = 'https://f58c92c1e8508e.lhr.life';
 const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') 
   ? 'http://127.0.0.1:8000' 
   : PUBLIC_BACKEND_URL;

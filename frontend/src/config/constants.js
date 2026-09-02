@@ -1,7 +1,7 @@
 export const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL || "https://YOUR_SUPABASE_PROJECT_ID.supabase.co";
 export const SUPABASE_ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || "YOUR_SUPABASE_ANON_KEY";
 
-export const BACKEND_API_URL = process.env.EXPO_PUBLIC_BACKEND_API_URL || "https://615110f40b497aad-203-190-14-228.serveousercontent.com";
+export const BACKEND_API_URL = process.env.EXPO_PUBLIC_BACKEND_API_URL || "https://f58c92c1e8508e.lhr.life";
 
 
 export const COLORS = {
