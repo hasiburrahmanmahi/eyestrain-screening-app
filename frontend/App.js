@@ -228,15 +228,22 @@ function wizardBack() {
 
 function validateCurrentStep() {
   const activeStepEl = document.getElementById(`step-${currentWizardStep}`);
-  const selects = activeStepEl.querySelectorAll('select[required]');
+  const selects = activeStepEl.querySelectorAll('select[required], input[required]');
+  let isValid = true;
   for (let s of selects) {
     if (!s.value) {
-      alert('Please complete all required questions on this step.');
-      s.focus();
-      return false;
+      s.style.border = '2px solid var(--risk-high)';
+      if (isValid) s.focus();
+      isValid = false;
+      s.onchange = () => { s.style.border = ''; };
+    } else {
+      s.style.border = '';
     }
   }
-  return true;
+  if (!isValid) {
+    alert('Please select an option for all questions on this step before proceeding.');
+  }
+  return isValid;
 }
 
 function fillAdmin(email, password) {
@@ -252,6 +259,15 @@ function startNewAssessment() {
 
 async function handleWizardSubmit(e) {
   e.preventDefault();
+
+  if (!validateCurrentStep()) return;
+
+  const btnSubmit = document.getElementById('btn-wizard-submit');
+  const originalText = btnSubmit ? btnSubmit.innerHTML : '⚡ Predict My Eye Strain';
+  if (btnSubmit) {
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = '⏳ Calculating Risk...';
+  }
 
   const payload = {
     gender: document.getElementById('q-gender').value,
@@ -289,6 +305,11 @@ async function handleWizardSubmit(e) {
     }
   } catch (err) {
     alert('Network error connecting to prediction API server.');
+  } finally {
+    if (btnSubmit) {
+      btnSubmit.disabled = false;
+      btnSubmit.innerHTML = originalText;
+    }
   }
 }
 
