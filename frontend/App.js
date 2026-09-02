@@ -1,4 +1,8 @@
-const API_BASE_URL = 'http://127.0.0.1:8000';
+const PUBLIC_BACKEND_URL = 'https://615110f40b497aad-203-190-14-228.serveousercontent.com';
+const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') 
+  ? 'http://127.0.0.1:8000' 
+  : PUBLIC_BACKEND_URL;
+
 
 let currentUser = null;
 let token = localStorage.getItem('access_token');
