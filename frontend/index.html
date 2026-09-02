@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eye Risk Detection | Digital Eye Strain Risk Platform</title>
+  <meta name="description" content="Research platform for estimating Digital Eye Strain risk scores and personalized ergonomic recommendations for university students.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <a href="#" class="brand" onclick="showPage('landing-view')">
+      <div class="brand-icon">👁️</div>
+      <span>Eye Risk Detection</span>
+    </a>
+    <ul class="nav-links">
+      <li><a class="nav-link active" onclick="showPage('landing-view')">Home</a></li>
+      <li><a class="nav-link" id="nav-dashboard" onclick="showPage('dashboard-view')" style="display: none;">Dashboard</a></li>
+      <li><a class="nav-link" id="nav-predict" onclick="startNewAssessment()">Predict</a></li>
+      <li><a class="nav-link" id="nav-history" onclick="showPage('history-view')" style="display: none;">History</a></li>
+      <li><a class="nav-link" id="nav-admin" onclick="showPage('admin-view')" style="display: none;">Admin Panel</a></li>
+      <li><a class="nav-link" onclick="showPage('about-view')">About</a></li>
+      <li><button class="btn btn-outline" id="theme-toggle-btn" onclick="toggleTheme()" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">🌙 Dark</button></li>
+    </ul>
+    <div id="auth-buttons">
+      <button class="btn btn-primary" onclick="openModal('login-modal')">👑 Admin Login</button>
+    </div>
+    <div id="user-badge" style="display: none; gap: 0.75rem; align-items: center;">
+      <span id="user-name-display" style="font-weight: 600; color: var(--accent-blue);"></span>
+      <button class="btn btn-secondary" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. LANDING PAGE VIEW -->
+    <section id="landing-view" class="page-view active">
+      <div class="hero-section">
+        <span class="hero-badge">Academic Research Prototype • Thesis Assessment Tool</span>
+        <h1 class="hero-title">Understand Your Digital Eye Strain Risk</h1>
+        <p class="hero-subtitle">
+          Assess how your daily screen viewing habits, ergonomic posture, and viewing distance are associated with Digital Eye Strain (DES) through scientifically trained ML models.
+        </p>
+        <div class="hero-cta-group">
+          <button class="btn btn-primary" onclick="startNewAssessment()">⚡ Start Assessment</button>
+          <button class="btn btn-secondary" onclick="openModal('login-modal')">👑 Admin Login</button>
+        </div>
+      </div>
+
+
+      <div class="grid-3">
+        <div class="glass-panel feature-card">
+          <div class="feature-icon">📝</div>
+          <h3 class="feature-title">1. Questionnaire</h3>
+          <p class="feature-desc">Complete a 4-step survey detailing daily screen time, lighting, distance, posture, and break habits.</p>
+        </div>
+        <div class="glass-panel feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3 class="feature-title">2. ML Risk Scoring</h3>
+          <p class="feature-desc">Our machine learning models analyze behavioral and ergonomic factors to compute your estimated DES score (0-14).</p>
+        </div>
+        <div class="glass-panel feature-card">
+          <div class="feature-icon">💡</div>
+          <h3 class="feature-title">3. Personalized Guidance</h3>
+          <p class="feature-desc">Receive custom ergonomic suggestions tailored to your unique habits to promote visual comfort.</p>
+        </div>
+      </div>
+
+      <div class="disclaimer-box" style="margin-top: 3rem;">
+        <strong>⚠️ Academic Research & Medical Disclaimer:</strong>
+        This platform is developed as part of an academic research project titled <em>"Predicting Digital Eye Strain Factors: A Cross-Sectional Study Based on Behavioral and Ergonomic Data"</em>. It provides an estimated Digital Eye Strain risk assessment based on user-provided survey information. It is not a medical diagnosis and should not replace professional ophthalmological advice.
+      </div>
+    </section>
+
+    <!-- 2. USER DASHBOARD VIEW -->
+    <section id="dashboard-view" class="page-view">
+      <div class="glass-panel" style="padding: 2rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Welcome back, <span id="dash-user-name" style="color: var(--accent-blue);"></span> 👋</h2>
+        <p style="color: var(--text-secondary);">Manage your eye strain assessments, track score trends, and review recommendations.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="glass-panel feature-card">
+          <h4 style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Latest Score</h4>
+          <div id="dash-latest-score" style="font-size: 2.5rem; font-weight: 800; color: var(--accent-blue); margin: 0.5rem 0;">--</div>
+          <div id="dash-latest-risk" class="risk-tag" style="display: none;">Low Risk</div>
+          <p id="dash-latest-date" style="font-size: 0.85rem; color: var(--text-muted);">No assessment recorded yet</p>
+        </div>
+
+        <div class="glass-panel feature-card" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem;">
+          <button class="btn btn-primary" onclick="startNewAssessment()">🚀 Start New Assessment</button>
+          <button class="btn btn-secondary" onclick="showPage('history-view')">📊 View History</button>
+        </div>
+
+        <div class="glass-panel feature-card" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem;">
+          <button class="btn btn-outline" onclick="openModal('feedback-modal')">💬 Give Feedback</button>
+          <button class="btn btn-secondary" onclick="showPage('profile-view')">👤 My Profile</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PREDICTION WIZARD VIEW -->
+    <section id="predict-view" class="page-view">
+      <div class="glass-panel wizard-card">
+        <div class="wizard-header">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="font-size: 1.5rem;" id="wizard-title">Demographic Information</h2>
+            <span style="font-weight: 700; color: var(--accent-blue);" id="wizard-step-indicator">Step 1 of 4</span>
+          </div>
+          <div class="wizard-progress-bar">
+            <div class="wizard-progress-fill" id="wizard-progress-fill"></div>
+          </div>
+        </div>
+
+        <form id="wizard-form" onsubmit="handleWizardSubmit(event)">
+          
+          <!-- STEP 1: Demographics -->
+          <div class="wizard-step-content active" id="step-1">
+            <div class="form-group">
+              <label class="form-label">Q1. Gender</label>
+              <select class="form-select" id="q-gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Q2. Age</label>
+              <select class="form-select" id="q-age" required>
+                <option value="">Select Age</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Q3. Current Year of Study</label>
+              <select class="form-select" id="q-study-year" required>
+                <option value="">Select Year of Study</option>
+                <option value="1st year">1st year</option>
+                <option value="2nd year">2nd year</option>
+                <option value="3rd year">3rd year</option>
+                <option value="4th year">4th year</option>
+                <option value="Master's">Master's</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- STEP 2: Screen Usage -->
+          <div class="wizard-step-content" id="step-2" style="display: none;">
+            <div class="form-group">
+              <label class="form-label">Q4. Average Daily Screen Time</label>
+              <select class="form-select" id="q-screen-time" required>
+                <option value="">Select Daily Screen Duration</option>
+                <option value="Less than 4 hours">Less than 4 hours</option>
+                <option value="4 to 7 hours">4 to 7 hours</option>
+                <option value="More than 7 hours">More than 7 hours</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Q5. Which device do you use most frequently?</label>
+              <select class="form-select" id="q-device" required>
+                <option value="">Select Primary Device</option>
+                <option value="Smartphone">Smartphone</option>
+                <option value="Laptop / Desktop">Laptop / Desktop</option>
+                <option value="Tablet">Tablet</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Q6. Blue Light Filter / Night Mode Usage</label>
+              <select class="form-select" id="q-blue-light" required>
+                <option value="">Select Frequency</option>
+                <option value="Always">Always</option>
+                <option value="Sometimes">Sometimes</option>
+                <option value="Never">Never</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Q12. Continuous Screen Use Without Break</label>
+              <select class="form-select" id="q-continuous-use" required>
+                <option value="">Select Duration</option>
+                <option value="Less than 30 minutes">Less than 30 minutes</option>
+                <option value="30–60 minutes">30–60 minutes</option>
+                <option value="More than 60 minutes">More than 60 minutes</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- STEP 3: Ergonomics -->
+          <div class="wizard-step-content" id="step-3" style="display: none;">
+            <div class="form-group">
+              <label class="form-label">Q7. Do you maintain at least 20 inches (one arm distance) from screen?</label>
+              <select class="form-select" id="q-screen-distance" required>
+                <option value="">Select Option</option>
+                <option value="Always">Always</option>
+                <option value="Sometimes">Sometimes</option>
+                <option value="Never">Never</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Q8. Do you follow the 20-20-20 rule (Look 20ft away for 20s every 20m)?</label>
+              <select class="form-select" id="q-rule-20-20-20" required>
+                <option value="">Select Option</option>
+                <option value="Always">Always</option>
+                <option value="Sometimes">Sometimes</option>
+                <option value="Never">Never</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Q9. Do you use device in a dark room frequently?</label>
+              <select class="form-select" id="q-dark-room" required>
+                <option value="">Select Option</option>
+                <option value="Never">Never</option>
+                <option value="Sometimes">Sometimes</option>
+                <option value="Always">Always</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Q10. Do you use devices while lying down or in poor posture?</label>
+              <select class="form-select" id="q-poor-posture" required>
+                <option value="">Select Option</option>
+                <option value="Never">Never</option>
+                <option value="Sometimes">Sometimes</option>
+                <option value="Always">Always</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Q11. Do you wear medical glasses or contact lenses?</label>
+              <select class="form-select" id="q-glasses" required>
+                <option value="">Select Option</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+
+          </div>
+
+
+          <!-- Wizard Nav Controls -->
+          <div class="wizard-actions">
+            <button type="button" class="btn btn-secondary" id="btn-wizard-back" onclick="wizardBack()" style="visibility: hidden;">Back</button>
+            <button type="button" class="btn btn-primary" id="btn-wizard-next" onclick="wizardNext()">Next Step →</button>
+            <button type="submit" class="btn btn-primary" id="btn-wizard-submit" style="display: none;">⚡ Predict My Eye Strain</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 4. RESULTS VIEW -->
+    <section id="result-view" class="page-view">
+      <div class="glass-panel result-card">
+        <h2 style="font-size: 2rem;">Digital Eye Strain Assessment Result</h2>
+        <p style="color: var(--text-secondary); font-size: 0.95rem;">Model Predictions based on your ergonomic survey responses</p>
+
+        <div class="score-badge-circle">
+          <div class="score-number" id="res-score">8.4</div>
+          <div class="score-max">out of 14</div>
+        </div>
+
+        <div id="res-risk-badge" class="risk-tag moderate">MODERATE RISK</div>
+
+        <!-- Dedicated Score-Based Action Plan Panel -->
+        <div class="glass-panel" style="padding: 1.5rem; margin-top: 1.5rem; background: rgba(15, 23, 42, 0.7); border-color: var(--accent-blue); text-align: left;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--accent-blue); display: flex; align-items: center; gap: 0.5rem;">
+            <span>📋</span> What Should You Do Now? (Dedicated Score-Based Ergonomic Plan)
+          </h3>
+          <p id="res-score-summary-text" style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem;"></p>
+          <div id="res-score-action-plan" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h4 style="text-align: left; margin-bottom: 0.5rem;">Associated Ergonomic Risk Factors:</h4>
+          <ul class="factors-list" id="res-factors-list"></ul>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h4 style="text-align: left; margin-bottom: 0.5rem; color: var(--risk-low);">Personalized Ergonomic Recommendations:</h4>
+          <ul class="recs-list" id="res-recs-list"></ul>
+        </div>
+
+        <div class="wizard-actions" style="margin-top: 3rem; justify-content: center; gap: 1rem;">
+          <button class="btn btn-primary" onclick="startNewAssessment()">Take New Assessment</button>
+          <button class="btn btn-secondary" onclick="showPage('history-view')">View History</button>
+        </div>
+
+        <div class="disclaimer-box" style="margin-top: 2rem;">
+          <strong>Medical Disclaimer:</strong> This result is an estimated research-based risk assessment derived from statistical survey modeling and is not a medical diagnosis.
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. HISTORY VIEW -->
+    <section id="history-view" class="page-view">
+      <div class="glass-panel" style="padding: 2rem;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 1rem;">Assessment History</h2>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date & Time</th>
+              <th>DES Score</th>
+              <th>Risk Level</th>
+              <th>Model Version</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body">
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--text-muted);">Loading assessment history...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. ADMIN DASHBOARD VIEW -->
+    <section id="admin-view" class="page-view">
+      <div class="glass-panel" style="padding: 2rem; margin-bottom: 2rem;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Research Admin Dashboard</h2>
+        <p style="color: var(--text-secondary);">Participant statistics, model comparison matrix, and dataset management.</p>
+      </div>
+
+      <div class="grid-3">
+        <div class="glass-panel feature-card">
+          <h4 style="color: var(--text-muted);">Total Registered Users</h4>
+          <div id="adm-total-users" style="font-size: 2.5rem; font-weight: 800; color: var(--accent-blue);">0</div>
+        </div>
+        <div class="glass-panel feature-card">
+          <h4 style="color: var(--text-muted);">Total Assessments</h4>
+          <div id="adm-total-assessments" style="font-size: 2.5rem; font-weight: 800; color: var(--accent-purple);">0</div>
+        </div>
+        <div class="glass-panel feature-card">
+          <h4 style="color: var(--text-muted);">Average DES Score</h4>
+          <div id="adm-avg-score" style="font-size: 2.5rem; font-weight: 800; color: var(--risk-moderate);">0.0</div>
+        </div>
+      </div>
+
+      <!-- Model Performance Table -->
+      <div class="glass-panel" style="padding: 2rem; margin-top: 2rem;">
+        <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Model Performance Comparison Matrix</h3>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Model Name</th>
+              <th>MAE</th>
+              <th>RMSE</th>
+              <th>R²</th>
+              <th>Accuracy</th>
+              <th>F1 Score</th>
+            </tr>
+          </thead>
+          <tbody id="admin-model-table-body">
+            <tr>
+              <td colspan="6" style="text-align: center; color: var(--text-muted);">Loading model performance data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Super Admin User & Role Management -->
+      <div class="glass-panel" style="padding: 2rem; margin-top: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <div>
+            <h3 style="font-size: 1.3rem;">User Directory & Role Management</h3>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Super Admin & Admin controls for assigning roles and creating staff credentials.</p>
+          </div>
+          <button class="btn btn-primary" onclick="openModal('create-staff-modal')">➕ Add New Staff / Admin</button>
+        </div>
+
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Registered Date</th>
+            </tr>
+          </thead>
+          <tbody id="admin-users-table-body">
+            <tr>
+              <td colspan="5" style="text-align: center; color: var(--text-muted);">Loading system users...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Import Dataset -->
+      <div class="glass-panel" style="padding: 2rem; margin-top: 2rem;">
+        <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Import Research CSV / Excel Dataset (.xlsx)</h3>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Upload completed research survey Excel (.xlsx) or CSV containing Section A & Section B variables.</p>
+        <form onsubmit="handleImportDataset(event)" style="display: flex; gap: 1rem; align-items: center;">
+          <input type="file" id="csv-file-input" accept=".csv, .xlsx, .xls" required class="form-input" style="max-width: 400px;">
+          <button type="submit" class="btn btn-primary">Upload Dataset</button>
+        </form>
+        <div id="import-status" style="margin-top: 1rem; font-size: 0.9rem;"></div>
+      </div>
+    </section>
+
+    <!-- 7. ABOUT VIEW -->
+    <section id="about-view" class="page-view">
+      <div class="glass-panel" style="padding: 2.5rem; max-width: 900px; margin: 0 auto;">
+        <h2 style="font-size: 2rem; margin-bottom: 1rem;">About the Research</h2>
+        <p style="margin-bottom: 1rem;">
+          This platform is designed to support the academic thesis titled:
+          <br><strong>"Predicting Digital Eye Strain Factors: A Cross-Sectional Study Based on Behavioral and Ergonomic Data"</strong>.
+        </p>
+        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+          With the increasing shift towards online learning and digital coursework, university students spend long hours staring at computer and smartphone screens. This research investigates the statistical associations between daily screen duration, ergonomic viewing habits, break schedules, ambient lighting, and reported Digital Eye Strain (DES) symptoms.
+        </p>
+        <h3 style="margin-bottom: 0.5rem;">Target Calculation & Leakage Prevention</h3>
+        <p style="color: var(--text-secondary);">
+          To avoid target leakage, input features for model predictions consist strictly of Demographic and Ergonomic Section A variables (Q1-Q12). Symptom Section B questions (Q13-Q19) are used exclusively to compute the ground-truth outcome metric during ML model training.
+        </p>
+      </div>
+    </section>
+
+    <!-- 8. PROFILE VIEW -->
+    <section id="profile-view" class="page-view">
+      <div class="glass-panel" style="padding: 2.5rem; max-width: 600px; margin: 0 auto;">
+        <h2 style="font-size: 1.8rem; margin-bottom: 1.5rem;">User Profile</h2>
+        <form onsubmit="handleUpdateProfile(event)">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="prof-name" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" id="prof-email" class="form-input" disabled>
+          </div>
+          <div class="form-group">
+            <label class="form-label">University</label>
+            <input type="text" id="prof-university" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Year of Study</label>
+            <select class="form-select" id="prof-year">
+              <option value="1st year">1st year</option>
+              <option value="2nd year">2nd year</option>
+              <option value="3rd year">3rd year</option>
+              <option value="4th year">4th year</option>
+              <option value="Master's">Master's</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">Save Changes</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- AUTH MODALS -->
+  <!-- Super Admin Login Modal -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="glass-panel modal-content">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+        <h3>👑 Super Admin Login</h3>
+        <span style="cursor: pointer;" onclick="closeModal('login-modal')">✖</span>
+      </div>
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Admin Email</label>
+          <input type="email" id="login-email" class="form-input" required placeholder="admin@diu.edu.bd">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="login-password" class="form-input" required placeholder="••••••••">
+        </div>
+        <div id="login-error" style="color: var(--risk-high); font-size: 0.85rem; margin-bottom: 1rem;"></div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Login to Admin Panel</button>
+      </form>
+      
+      <div style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+        <span style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">Quick Fill Admin Credentials:</span>
+        <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem;" onclick="fillAdmin('mahi22205101151@diu.edu', 'admin123')">⚡ Fill Mahi Admin (mahi22205101151@diu.edu)</button>
+        <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem;" onclick="fillAdmin('help.eyestrain@gmail.com', 'EyeStrain123#')">⚡ Fill Super Admin (help.eyestrain@gmail.com)</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Feedback Modal -->
+  <div class="modal-overlay" id="feedback-modal">
+    <div class="glass-panel modal-content">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+        <h3>Help Us Improve</h3>
+        <span style="cursor: pointer;" onclick="closeModal('feedback-modal')">✖</span>
+      </div>
+      <form onsubmit="handleFeedbackSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">How useful was your assessment?</label>
+          <select class="form-select" id="fb-rating" required>
+            <option value="5">⭐⭐⭐⭐⭐ 5 - Extremely Useful</option>
+            <option value="4">⭐⭐⭐⭐ 4 - Very Useful</option>
+            <option value="3">⭐⭐⭐ 3 - Moderately Useful</option>
+            <option value="2">⭐⭐ 2 - Slightly Useful</option>
+            <option value="1">⭐ 1 - Not Useful</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Was the recommendation helpful?</label>
+          <select class="form-select" id="fb-helpful" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Comments or Suggestions</label>
+          <textarea id="fb-comment" class="form-textarea" rows="3" placeholder="Share your feedback..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Feedback</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Staff Modal -->
+  <div class="modal-overlay" id="create-staff-modal">
+    <div class="glass-panel modal-content">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+        <h3>Add New Admin / Staff Account</h3>
+        <span style="cursor: pointer;" onclick="closeModal('create-staff-modal')">✖</span>
+      </div>
+      <form onsubmit="handleCreateStaff(event)">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="staff-name" class="form-input" required placeholder="Dr. Researcher">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="staff-email" class="form-input" required placeholder="staff@eyestrain.edu">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="staff-password" class="form-input" required placeholder="••••••••">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Assign Role</label>
+          <select class="form-select" id="staff-role" required>
+            <option value="ADMIN">Admin (Sub-Admin / Full Research Control)</option>
+            <option value="RESEARCHER">Researcher (View & Export Reports)</option>
+            <option value="USER">User / Student</option>
+          </select>
+        </div>
+        <div id="staff-error" style="color: var(--risk-high); font-size: 0.85rem; margin-bottom: 1rem;"></div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account Credentials</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Eye Risk Detection Platform • Digital Eye Strain Thesis Prototype</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
