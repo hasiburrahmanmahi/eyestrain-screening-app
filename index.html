@@ -25,10 +25,10 @@
       <li><a class="nav-link" id="nav-history" onclick="showPage('history-view')" style="display: none;">History</a></li>
       <li><a class="nav-link" id="nav-admin" onclick="showPage('admin-view')" style="display: none;">Admin Panel</a></li>
       <li><a class="nav-link" onclick="showPage('about-view')">About</a></li>
-      <li><button class="btn btn-outline" id="theme-toggle-btn" onclick="toggleTheme()" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">🌙 Dark</button></li>
     </ul>
-    <div id="auth-buttons">
+    <div id="auth-buttons" style="display: flex; gap: 0.5rem; align-items: center;">
       <button class="btn btn-primary" onclick="openModal('login-modal')">👑 Admin Login</button>
+      <button class="btn btn-outline theme-toggle-btn-badge" onclick="toggleTheme()" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">🌙 Dark</button>
     </div>
     <div id="user-badge" style="display: none; gap: 0.75rem; align-items: center;">
       <span id="user-name-display" style="font-weight: 600; color: var(--accent-blue);"></span>
