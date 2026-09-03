@@ -531,6 +531,68 @@ body {
   border-left-color: var(--risk-low);
 }
 
+/* Action Plan Panel & List Styling */
+.action-plan-panel {
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--accent-blue);
+  border-radius: var(--radius-md);
+  text-align: left;
+}
+
+.action-plan-item {
+  background: rgba(30, 41, 59, 0.6);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+/* Light Mode Overrides for Result Components */
+[data-theme="light"] .action-plan-panel {
+  background: #f0f9ff;
+  border-color: #7dd3fc;
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.08);
+}
+
+[data-theme="light"] .action-plan-panel h3 {
+  color: #0369a1 !important;
+}
+
+[data-theme="light"] .action-plan-panel p {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .action-plan-item {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e0f2fe;
+  border-left: 4px solid #0284c7;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .factors-list li {
+  background: #fff1f2;
+  color: #9f1239;
+  border: 1px solid #ffe4e6;
+  border-left: 4px solid #f43f5e;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .recs-list li {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #dcfce7;
+  border-left: 4px solid #22c55e;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="light"] .result-card h4 {
+  color: #0f172a !important;
+}
+
 .disclaimer-box {
   background: rgba(245, 158, 11, 0.1);
   border: 1px solid rgba(245, 158, 11, 0.3);

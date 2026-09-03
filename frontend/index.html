@@ -277,7 +277,7 @@
         <div id="res-risk-badge" class="risk-tag moderate">MODERATE RISK</div>
 
         <!-- Dedicated Score-Based Action Plan Panel -->
-        <div class="glass-panel" style="padding: 1.5rem; margin-top: 1.5rem; background: rgba(15, 23, 42, 0.7); border-color: var(--accent-blue); text-align: left;">
+        <div class="action-plan-panel">
           <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--accent-blue); display: flex; align-items: center; gap: 0.5rem;">
             <span>📋</span> What Should You Do Now? (Dedicated Score-Based Ergonomic Plan)
           </h3>
@@ -926,7 +926,7 @@ function renderAssessmentResult(res) {
 
   summaryTextEl.textContent = summaryMsg;
   actionPlanEl.innerHTML = dedicatedPlan.map(item => `
-    <div style="background: rgba(30, 41, 59, 0.6); padding: 0.7rem 1rem; border-left: 3px solid var(--accent-blue); border-radius: 4px; font-size: 0.9rem;">
+    <div class="action-plan-item">
       ${item}
     </div>
   `).join('');

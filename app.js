@@ -357,7 +357,7 @@ function renderAssessmentResult(res) {
 
   summaryTextEl.textContent = summaryMsg;
   actionPlanEl.innerHTML = dedicatedPlan.map(item => `
-    <div style="background: rgba(30, 41, 59, 0.6); padding: 0.7rem 1rem; border-left: 3px solid var(--accent-blue); border-radius: 4px; font-size: 0.9rem;">
+    <div class="action-plan-item">
       ${item}
     </div>
   `).join('');
