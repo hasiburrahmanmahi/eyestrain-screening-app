@@ -864,3 +864,263 @@ footer {
   }
 }
 
+/* ==========================================================================
+   ULTRA-PREMIUM MOBILE UI & UX OPTIMIZATIONS (<768px & <480px)
+   ========================================================================== */
+
+/* Smooth View Animations */
+.page-view {
+  animation: mobileFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes mobileFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Touch & Button Micro-Interactions */
+.btn {
+  touch-action: manipulation;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.97) !important;
+}
+
+/* Custom Scrollbars for Responsive Containers */
+.data-table-container::-webkit-scrollbar {
+  height: 6px;
+}
+.data-table-container::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.2);
+  border-radius: 4px;
+}
+.data-table-container::-webkit-scrollbar-thumb {
+  background: var(--accent-blue);
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  /* 1. Mobile Top Navigation Polish */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background: rgba(15, 23, 42, 0.88) !important;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 0.75rem 1rem !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  [data-theme="light"] .navbar {
+    background: rgba(255, 255, 255, 0.92) !important;
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  }
+
+  .brand {
+    font-size: 1.05rem !important;
+    font-weight: 700;
+  }
+
+  /* Navigation Pills Bar for Mobile */
+  .nav-links {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    gap: 0.5rem !important;
+    padding: 0.4rem 0 !important;
+    margin-top: 0.35rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+    justify-content: flex-start !important;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for clean tab-bar look */
+  }
+
+  .nav-link {
+    display: inline-block;
+    padding: 0.4rem 0.85rem !important;
+    border-radius: 50px !important;
+    font-size: 0.82rem !important;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .nav-link.active {
+    background: rgba(56, 189, 248, 0.15) !important;
+    color: var(--accent-blue) !important;
+    border-color: rgba(56, 189, 248, 0.3) !important;
+    font-weight: 700 !important;
+  }
+
+  [data-theme="light"] .nav-link.active {
+    background: #e0f2fe !important;
+    color: #0284c7 !important;
+    border-color: #7dd3fc !important;
+  }
+
+  /* Header Action Badges */
+  #auth-buttons, #user-badge {
+    gap: 0.5rem !important;
+  }
+
+  #user-badge {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  #user-name-display {
+    font-size: 0.82rem !important;
+    max-width: 130px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* 2. Hero Section Mobile UX */
+  .hero-section {
+    padding: 1.75rem 0.5rem 1.25rem !important;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-size: 0.75rem !important;
+    padding: 0.35rem 0.85rem !important;
+    border-radius: 50px;
+    background: rgba(56, 189, 248, 0.1) !important;
+    border: 1px solid rgba(56, 189, 248, 0.25) !important;
+    margin-bottom: 1rem;
+    word-break: break-word;
+  }
+
+  .hero-title {
+    font-size: 1.75rem !important;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.85rem !important;
+  }
+
+  .hero-subtitle {
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem !important;
+    padding: 0 0.25rem;
+  }
+
+  /* 3. Wizard & Form Mobile Optimization */
+  .wizard-card {
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .wizard-progress-bar {
+    height: 8px !important;
+    border-radius: 10px !important;
+  }
+
+  .wizard-progress-fill {
+    border-radius: 10px !important;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)) !important;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem !important;
+  }
+
+  .form-label {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.4rem !important;
+    display: block;
+  }
+
+  .form-select, .form-input, .form-textarea {
+    font-size: 16px !important; /* Touch auto-zoom prevention */
+    border-radius: 10px !important;
+    padding: 0.8rem 0.9rem !important;
+    min-height: 48px; /* Apple Human Interface Guideline minimum target */
+    width: 100% !important;
+  }
+
+  /* Mobile Select Arrow Custom Styling */
+  .form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.85rem center !important;
+    background-size: 1.1rem !important;
+    padding-right: 2.4rem !important;
+  }
+
+  [data-theme="light"] .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230284c7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  }
+
+  /* 4. Results Screen Mobile Design */
+  .score-badge-circle {
+    width: 135px !important;
+    height: 135px !important;
+    border-width: 3px !important;
+    animation: mobilePulseGlow 3s infinite ease-in-out;
+  }
+
+  @keyframes mobilePulseGlow {
+    0%, 100% { box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
+    50% { box-shadow: 0 0 30px rgba(56, 189, 248, 0.45); }
+  }
+
+  .action-plan-panel {
+    border-radius: 14px !important;
+    padding: 1.25rem 1rem !important;
+  }
+
+  .action-plan-item {
+    border-radius: 8px !important;
+    line-height: 1.45 !important;
+    padding: 0.8rem 0.9rem !important;
+  }
+
+  /* 5. Mobile Modals & Overlays */
+  .modal-content {
+    width: 94% !important;
+    border-radius: 18px !important;
+    padding: 1.5rem 1.25rem !important;
+    margin: 1rem auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.55rem !important;
+  }
+  .brand span {
+    font-size: 0.98rem !important;
+  }
+  .btn {
+    min-height: 44px;
+    font-size: 0.88rem !important;
+  }
+  .role-badge {
+    font-size: 0.7rem !important;
+  }
+}
+
