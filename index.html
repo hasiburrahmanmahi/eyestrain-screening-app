@@ -330,51 +330,53 @@
 
     <!-- 6. ADMIN DASHBOARD VIEW -->
     <section id="admin-view" class="page-view">
-      <div class="glass-panel" style="padding: 2rem; margin-bottom: 2rem;">
+      <div class="glass-panel admin-card" style="margin-bottom: 2rem;">
         <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Research Admin Dashboard</h2>
         <p style="color: var(--text-secondary);">Participant statistics, model comparison matrix, and dataset management.</p>
       </div>
 
       <div class="grid-3">
-        <div class="glass-panel feature-card">
+        <div class="glass-panel feature-card admin-card">
           <h4 style="color: var(--text-muted);">Total Registered Users</h4>
-          <div id="adm-total-users" style="font-size: 2.5rem; font-weight: 800; color: var(--accent-blue);">0</div>
+          <div id="adm-total-users" class="admin-stat-num" style="font-size: 2.5rem; font-weight: 800; color: var(--accent-blue);">0</div>
         </div>
-        <div class="glass-panel feature-card">
+        <div class="glass-panel feature-card admin-card">
           <h4 style="color: var(--text-muted);">Total Assessments</h4>
-          <div id="adm-total-assessments" style="font-size: 2.5rem; font-weight: 800; color: var(--accent-purple);">0</div>
+          <div id="adm-total-assessments" class="admin-stat-num" style="font-size: 2.5rem; font-weight: 800; color: var(--accent-purple);">0</div>
         </div>
-        <div class="glass-panel feature-card">
+        <div class="glass-panel feature-card admin-card">
           <h4 style="color: var(--text-muted);">Average DES Score</h4>
-          <div id="adm-avg-score" style="font-size: 2.5rem; font-weight: 800; color: var(--risk-moderate);">0.0</div>
+          <div id="adm-avg-score" class="admin-stat-num" style="font-size: 2.5rem; font-weight: 800; color: var(--risk-moderate);">0.0</div>
         </div>
       </div>
 
       <!-- Model Performance Table -->
-      <div class="glass-panel" style="padding: 2rem; margin-top: 2rem;">
+      <div class="glass-panel admin-card" style="margin-top: 2rem;">
         <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Model Performance Comparison Matrix</h3>
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Model Name</th>
-              <th>MAE</th>
-              <th>RMSE</th>
-              <th>R²</th>
-              <th>Accuracy</th>
-              <th>F1 Score</th>
-            </tr>
-          </thead>
-          <tbody id="admin-model-table-body">
-            <tr>
-              <td colspan="6" style="text-align: center; color: var(--text-muted);">Loading model performance data...</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Model Name</th>
+                <th>MAE</th>
+                <th>RMSE</th>
+                <th>R²</th>
+                <th>Accuracy</th>
+                <th>F1 Score</th>
+              </tr>
+            </thead>
+            <tbody id="admin-model-table-body">
+              <tr>
+                <td colspan="6" style="text-align: center; color: var(--text-muted);">Loading model performance data...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Super Admin User & Role Management -->
-      <div class="glass-panel" style="padding: 2rem; margin-top: 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <div class="glass-panel admin-card" style="margin-top: 2rem;">
+        <div class="admin-header-flex">
           <div>
             <h3 style="font-size: 1.3rem;">User Directory & Role Management</h3>
             <p style="color: var(--text-secondary); font-size: 0.9rem;">Super Admin & Admin controls for assigning roles and creating staff credentials.</p>
@@ -382,29 +384,31 @@
           <button class="btn btn-primary" onclick="openModal('create-staff-modal')">➕ Add New Staff / Admin</button>
         </div>
 
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>User ID</th>
-              <th>Full Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Registered Date</th>
-            </tr>
-          </thead>
-          <tbody id="admin-users-table-body">
-            <tr>
-              <td colspan="5" style="text-align: center; color: var(--text-muted);">Loading system users...</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Registered Date</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-table-body">
+              <tr>
+                <td colspan="5" style="text-align: center; color: var(--text-muted);">Loading system users...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Import Dataset -->
-      <div class="glass-panel" style="padding: 2rem; margin-top: 2rem;">
+      <div class="glass-panel admin-card" style="margin-top: 2rem;">
         <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Import Research CSV / Excel Dataset (.xlsx)</h3>
         <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Upload completed research survey Excel (.xlsx) or CSV containing Section A & Section B variables.</p>
-        <form onsubmit="handleImportDataset(event)" style="display: flex; gap: 1rem; align-items: center;">
+        <form onsubmit="handleImportDataset(event)" class="admin-form-flex">
           <input type="file" id="csv-file-input" accept=".csv, .xlsx, .xls" required class="form-input" style="max-width: 400px;">
           <button type="submit" class="btn btn-primary">Upload Dataset</button>
         </form>
