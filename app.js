@@ -20,11 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function initTheme() {
   document.documentElement.setAttribute('data-theme', currentTheme);
   document.body.setAttribute('data-theme', currentTheme);
-  const btn = document.getElementById('theme-toggle-btn');
-  if (btn) {
-    btn.innerHTML = currentTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
-    btn.setAttribute('aria-label', `Switch to ${currentTheme === 'dark' ? 'Light' : 'Dark'} Mode`);
-  }
+  const text = currentTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+  const label = `Switch to ${currentTheme === 'dark' ? 'Light' : 'Dark'} Mode`;
+  
+  document.querySelectorAll('#theme-toggle-btn, .theme-toggle-btn-badge').forEach(btn => {
+    btn.innerHTML = text;
+    btn.setAttribute('aria-label', label);
+  });
 }
 
 function toggleTheme() {

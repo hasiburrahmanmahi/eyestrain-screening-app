@@ -32,6 +32,7 @@
     </div>
     <div id="user-badge" style="display: none; gap: 0.75rem; align-items: center;">
       <span id="user-name-display" style="font-weight: 600; color: var(--accent-blue);"></span>
+      <button class="btn btn-outline theme-toggle-btn-badge" onclick="toggleTheme()" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">🌙 Dark</button>
       <button class="btn btn-secondary" onclick="logout()">Logout</button>
     </div>
   </header>
@@ -593,11 +594,13 @@ document.addEventListener('DOMContentLoaded', () => {
 function initTheme() {
   document.documentElement.setAttribute('data-theme', currentTheme);
   document.body.setAttribute('data-theme', currentTheme);
-  const btn = document.getElementById('theme-toggle-btn');
-  if (btn) {
-    btn.innerHTML = currentTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
-    btn.setAttribute('aria-label', `Switch to ${currentTheme === 'dark' ? 'Light' : 'Dark'} Mode`);
-  }
+  const text = currentTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
+  const label = `Switch to ${currentTheme === 'dark' ? 'Light' : 'Dark'} Mode`;
+  
+  document.querySelectorAll('#theme-toggle-btn, .theme-toggle-btn-badge').forEach(btn => {
+    btn.innerHTML = text;
+    btn.setAttribute('aria-label', label);
+  });
 }
 
 function toggleTheme() {
