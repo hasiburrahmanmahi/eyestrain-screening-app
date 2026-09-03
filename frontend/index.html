@@ -490,9 +490,9 @@
       </form>
       
       <div style="border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-        <span style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">Quick Fill Admin Credentials:</span>
-        <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem;" onclick="fillAdmin('mahi22205101151@diu.edu', 'admin123')">⚡ Fill Mahi Admin (mahi22205101151@diu.edu)</button>
-        <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem;" onclick="fillAdmin('help.eyestrain@gmail.com', 'EyeStrain123#')">⚡ Fill Super Admin (help.eyestrain@gmail.com)</button>
+        <span style="font-size: 0.75rem; color: var(--text-muted); text-align: center;">Quick Fill Admin Email (Password Required):</span>
+        <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem;" type="button" onclick="fillAdmin('mahi22205101151@diu.edu')">⚡ Auto-fill Email (mahi22205101151@diu.edu)</button>
+        <button class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem;" type="button" onclick="fillAdmin('help.eyestrain@gmail.com')">⚡ Auto-fill Email (help.eyestrain@gmail.com)</button>
       </div>
     </div>
   </div>
@@ -819,9 +819,11 @@ function validateCurrentStep() {
   return isValid;
 }
 
-function fillAdmin(email, password) {
+function fillAdmin(email) {
   document.getElementById('login-email').value = email;
-  document.getElementById('login-password').value = password;
+  const passEl = document.getElementById('login-password');
+  passEl.value = '';
+  passEl.focus();
 }
 
 function startNewAssessment() {

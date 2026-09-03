@@ -246,9 +246,11 @@ function validateCurrentStep() {
   return isValid;
 }
 
-function fillAdmin(email, password) {
+function fillAdmin(email) {
   document.getElementById('login-email').value = email;
-  document.getElementById('login-password').value = password;
+  const passEl = document.getElementById('login-password');
+  passEl.value = '';
+  passEl.focus();
 }
 
 function startNewAssessment() {
