@@ -1,7 +1,7 @@
 export const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL || "https://YOUR_SUPABASE_PROJECT_ID.supabase.co";
 export const SUPABASE_ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || "YOUR_SUPABASE_ANON_KEY";
 
-export const BACKEND_API_URL = process.env.EXPO_PUBLIC_BACKEND_API_URL || "https://335d959e6d6293.lhr.life";
+export const BACKEND_API_URL = process.env.EXPO_PUBLIC_BACKEND_API_URL || "https://taking-characteristics-pursuit-counting.trycloudflare.com";
 
 
 export const COLORS = {

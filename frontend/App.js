@@ -1,4 +1,4 @@
-const PUBLIC_BACKEND_URL = 'https://335d959e6d6293.lhr.life';
+const PUBLIC_BACKEND_URL = 'https://taking-characteristics-pursuit-counting.trycloudflare.com';
 const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') 
   ? 'http://127.0.0.1:8000' 
   : PUBLIC_BACKEND_URL;
